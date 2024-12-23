@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EmailValidator.props" />
+</Project>
