@@ -5,7 +5,7 @@ using DnsClient.Protocol;
 
 namespace EmailValidator.Services
 {
-    public class CheckEmailService : ICheckEmailService
+    public class EmailValidatorService : IEmailValidatorService
     {
         private readonly LookupClient client = new();
         static readonly string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";

@@ -1,6 +1,6 @@
 ﻿namespace EmailValidator.Model
 {
-    public interface ICheckEmailService
+    public interface IEmailValidatorService
     {
         Task<bool> CheckSpfRecord(string domain, CancellationToken ct);
         Task<bool> CheckMxRecords(string domain, CancellationToken ct);

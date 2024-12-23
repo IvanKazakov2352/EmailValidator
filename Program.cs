@@ -3,8 +3,7 @@ using EmailValidator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ICheckEmailService, CheckEmailService>();
-builder.Services.AddTransient<ICheckEmailService, CheckEmailService>();
+builder.Services.AddTransient<IEmailValidatorService, EmailValidatorService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
