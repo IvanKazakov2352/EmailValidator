@@ -8,7 +8,7 @@ namespace EmailValidator.Controllers
     public class CheckEmailController(ICheckEmailService service) : ControllerBase
     {
         [HttpGet("checkEmail")]
-        public async ValueTask<bool> CheckEmail(string email, CancellationToken ct)
+        public async ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct)
         {
             return await service.CheckEmail(email, ct);
         }
