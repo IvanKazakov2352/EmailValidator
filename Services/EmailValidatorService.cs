@@ -28,8 +28,8 @@ namespace EmailValidator.Services
             var records = mxResponse.AllRecords.MxRecords();
 
             if (records.Any()) return true;
-            return false;
 
+            return false;
         }
 
         public async ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct)
