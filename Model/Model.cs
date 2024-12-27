@@ -2,8 +2,8 @@
 {
     public interface IEmailValidatorService
     {
-        Task<bool> CheckSpfRecord(string domain, CancellationToken ct);
-        Task<bool> CheckMxRecord(string domain, CancellationToken ct);
+        ValueTask<bool> CheckSpfRecord(string domain, CancellationToken ct);
+        ValueTask<bool> CheckMxRecord(string domain, CancellationToken ct);
         ValueTask<ValidationResult> ValidateEmail(string email, CancellationToken ct);
     }
 

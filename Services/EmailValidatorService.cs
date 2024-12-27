@@ -7,10 +7,10 @@ namespace EmailValidator.Services
     public class EmailValidatorService : IEmailValidatorService
     {
         private readonly LookupClient client = new();
-        static readonly string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        private static readonly string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
         private readonly Regex regex = new(pattern);
 
-        public async Task<bool> CheckSpfRecord(string domain, CancellationToken ct)
+        public async ValueTask<bool> CheckSpfRecord(string domain, CancellationToken ct)
         {
             IDnsQueryResponse response = await client.QueryAsync(domain, QueryType.TXT, QueryClass.IN, ct);
 
@@ -22,7 +22,7 @@ namespace EmailValidator.Services
             return spfRecord is not null;
         }
 
-        public async Task<bool> CheckMxRecord(string domain, CancellationToken ct)
+        public async ValueTask<bool> CheckMxRecord(string domain, CancellationToken ct)
         {
             IDnsQueryResponse response = await client.QueryAsync(domain, QueryType.MX, QueryClass.IN, ct);
             var records = response.AllRecords.MxRecords();
