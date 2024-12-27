@@ -1,7 +1,6 @@
 ﻿using EmailValidator.Model;
 using DnsClient;
 using System.Text.RegularExpressions;
-using DnsClient.Protocol;
 
 namespace EmailValidator.Services
 {
@@ -15,22 +14,22 @@ namespace EmailValidator.Services
         {
             IDnsQueryResponse txtResponse = await client.QueryAsync(domain, QueryType.TXT, QueryClass.IN, ct);
 
-            bool spfRecord = txtResponse.AllRecords
+            var spfRecord = txtResponse.AllRecords
                 .TxtRecords()
-                .ToArray()
-                .Where((record) => record.Text.FirstOrDefault()?.StartsWith("v=spf1") ?? false).Any();
+                .FirstOrDefault(x => x.Text
+                .FirstOrDefault(str => str.StartsWith("v=spf1")) is not null);
 
-            return spfRecord;
+            return spfRecord is not null;
         }
 
         public async Task<bool> CheckMxRecords(string domain, CancellationToken ct)
         {
             IDnsQueryResponse mxResponse = await client.QueryAsync(domain, QueryType.MX, QueryClass.IN, ct);
-            MxRecord[] records = mxResponse.AllRecords.MxRecords().ToArray();
+            var records = mxResponse.AllRecords.MxRecords();
 
-            if (records.Length == 0) return false;
+            if (records.Any()) return true;
+            return false;
 
-            return true;
         }
 
         public async ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct)
