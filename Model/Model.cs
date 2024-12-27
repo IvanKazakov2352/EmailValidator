@@ -3,8 +3,8 @@
     public interface IEmailValidatorService
     {
         Task<bool> CheckSpfRecord(string domain, CancellationToken ct);
-        Task<bool> CheckMxRecords(string domain, CancellationToken ct);
-        ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct);
+        Task<bool> CheckMxRecord(string domain, CancellationToken ct);
+        ValueTask<ValidationResult> ValidateEmail(string email, CancellationToken ct);
     }
 
     public class ValidationResult(bool mxRecords, bool spfRecords)

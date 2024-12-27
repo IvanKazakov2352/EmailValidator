@@ -8,9 +8,9 @@ namespace EmailValidator.Controllers
     public class CheckEmailController(IEmailValidatorService service) : ControllerBase
     {
         [HttpGet("validate")]
-        public async ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct)
+        public async ValueTask<ValidationResult> ValidateEmail(string email, CancellationToken ct)
         {
-            return await service.CheckEmail(email, ct);
+            return await service.ValidateEmail(email, ct);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace EmailValidator.Services
 
         public async Task<bool> CheckSpfRecord(string domain, CancellationToken ct)
         {
-            IDnsQueryResponse txtResponse = await client.QueryAsync(domain, QueryType.TXT, QueryClass.IN, ct);
+            IDnsQueryResponse response = await client.QueryAsync(domain, QueryType.TXT, QueryClass.IN, ct);
 
-            var spfRecord = txtResponse.AllRecords
+            var spfRecord = response.AllRecords
                 .TxtRecords()
                 .FirstOrDefault(x => x.Text
                 .FirstOrDefault(str => str.StartsWith("v=spf1")) is not null);
@@ -22,17 +22,17 @@ namespace EmailValidator.Services
             return spfRecord is not null;
         }
 
-        public async Task<bool> CheckMxRecords(string domain, CancellationToken ct)
+        public async Task<bool> CheckMxRecord(string domain, CancellationToken ct)
         {
-            IDnsQueryResponse mxResponse = await client.QueryAsync(domain, QueryType.MX, QueryClass.IN, ct);
-            var records = mxResponse.AllRecords.MxRecords();
+            IDnsQueryResponse response = await client.QueryAsync(domain, QueryType.MX, QueryClass.IN, ct);
+            var records = response.AllRecords.MxRecords();
 
             if (records.Any()) return true;
 
             return false;
         }
 
-        public async ValueTask<ValidationResult> CheckEmail(string email, CancellationToken ct)
+        public async ValueTask<ValidationResult> ValidateEmail(string email, CancellationToken ct)
         {
             ArgumentException.ThrowIfNullOrEmpty(email, nameof(email));
 
@@ -42,7 +42,7 @@ namespace EmailValidator.Services
             string domain = email.Split("@")[1];
 
             bool spfRecord = await CheckSpfRecord(domain, ct);
-            bool mxRecords = await CheckMxRecords(domain, ct);
+            bool mxRecords = await CheckMxRecord(domain, ct);
 
             return new ValidationResult(mxRecords, spfRecord);
         }
