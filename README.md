@@ -1,6 +1,6 @@
 # EmailValidator
-Проверка email адреса через регулярное выражение и доп проверка MX и SPF записей домена электронной почты
+Check MX and SPF records for email address
 
-Автор - Иван Казаков
+Author - Иван Казаков
 
-Личный сайт - https://ikazakov.com
+Personal Site - https://ikazakov.com
